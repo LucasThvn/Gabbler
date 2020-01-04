@@ -1,0 +1,133 @@
+@import "vars";
+
+body {
+    margin: 0;
+    background-color: $backgroundColor;
+    display: grid;
+    grid-template-columns: 20vw 3fr 2fr;
+    grid-template-rows: 100px calc(100vh - 100px);
+    grid-template-areas:
+                "header header header"
+                "files music chat";
+    color: $secondaryColor;
+    font-family: 'Lato', sans-serif;
+
+    header {
+        grid-area: header;
+        display: flex;
+        justify-content: space-between;
+        height: 100%;
+        align-items: center;
+
+        .gabbler {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 160px;
+            height: 50px;
+            font-family: 'Lilita One', cursive;
+            color: $primaryColor;
+            text-shadow: 3px 3px 4px #000000, -3px -3px 4px #676767;
+            font-size: 30px;
+            margin: 0 0 0 25px;
+            border-radius: 40px;
+            box-shadow: $light-shadow, $dark-shadow;
+        }
+
+        .profile {
+            display: flex;
+            height: 55px;
+            width: 55px;
+            border-radius: 50%;
+            margin: 0 25px 0 0;
+            box-shadow: $light-shadow, $dark-shadow;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                height: 45px;
+                width: 45px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+        }
+    }
+
+    .files {
+        grid-area: files;
+        margin-top: 10vh;
+
+        .ideas {
+            height: 35px;
+            padding: 4px 15px 0 10px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bolder;
+            color: $primaryColor;
+            box-shadow: $light-shadow, $dark-shadow;
+            width: fit-content;
+            border-radius: 0 40px 40px 0;
+
+            svg {
+                width: 30px;
+                height: 27px;
+
+                path {
+                    fill: $primaryColor;
+                    transform: translate(5 5);
+                    box-shadow: $light-shadow, $dark-shadow;
+                }
+            }
+
+            p {
+                margin: 0;
+                padding: 0 0 4px 5px;
+            }
+
+        }
+    }
+
+    .music {
+        grid-area: music;
+
+        h2 {
+            color: $primaryColor;
+            font-weight: 400;
+            font-size: 30px;
+            margin: 0;
+        }
+
+        button {
+            height: 35px;
+            width: fit-content;
+            background-color: $backgroundColor;
+            box-shadow: $light-shadow, $dark-shadow;
+            border: solid 2px $primaryColor;
+            border-radius: 5px 40px 40px 5px ;
+            padding: 0 15px;
+            margin-top: 8vh;
+            display: flex;
+            align-items: center;
+
+            svg {
+                width: 20px;
+                height: 20px;
+
+                path {
+                    fill: $primaryColor;
+                    stroke: $primaryColor;
+                }
+            }
+
+            p {
+                margin: 0 0 0 15px;
+                color: $primaryColor;
+                font-size: 16px;
+                font-weight: 500;
+            }
+        }
+    }
+
+}
