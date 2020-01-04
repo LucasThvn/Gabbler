@@ -4,11 +4,11 @@ body {
     margin: 0;
     background-color: $backgroundColor;
     display: grid;
-    grid-template-columns: 20vw 3fr 2fr;
-    grid-template-rows: 100px calc(100vh - 100px);
+    grid-template-columns: 25vw 50vw 25vw;
+    grid-template-rows: 80px calc(100vh - 100px);
     grid-template-areas:
                 "header header header"
-                "files music chat";
+                "files music .";
     color: $secondaryColor;
     font-family: 'Lato', sans-serif;
 
