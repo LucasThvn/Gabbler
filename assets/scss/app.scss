@@ -5,12 +5,14 @@ body {
     background-color: $backgroundColor;
     display: grid;
     grid-template-columns: 25vw 50vw 25vw;
-    grid-template-rows: 80px calc(100vh - 100px);
-    grid-template-areas:
-                "header header header"
-                "files music .";
+    grid-template-rows: 85px calc(100vh - 235px) 150px;
+    grid-template-areas: "header header header" "files music ." "files . .";
     color: $secondaryColor;
     font-family: 'Lato', sans-serif;
+
+    a {
+        text-decoration: none;
+    }
 
     header {
         grid-area: header;
@@ -44,6 +46,10 @@ body {
             justify-content: center;
             align-items: center;
 
+            &:hover {
+                cursor: pointer;
+            }
+
             img {
                 height: 45px;
                 width: 45px;
@@ -58,7 +64,7 @@ body {
         margin-top: 10vh;
 
         .ideas {
-            height: 35px;
+            height: 30px;
             padding: 4px 15px 0 10px;
             margin-bottom: 15px;
             display: flex;
@@ -69,6 +75,10 @@ body {
             box-shadow: $light-shadow, $dark-shadow;
             width: fit-content;
             border-radius: 0 40px 40px 0;
+
+            &:hover {
+                cursor: pointer;
+            }
 
             svg {
                 width: 30px;
@@ -87,10 +97,17 @@ body {
             }
 
         }
+
+        .active {
+            border: solid 2px $primaryColor;
+            border-left-color: $backgroundColor;
+        }
     }
 
     .music {
         grid-area: music;
+        display: flex;
+        flex-direction: column;
 
         h2 {
             color: $primaryColor;
@@ -99,17 +116,35 @@ body {
             margin: 0;
         }
 
-        button {
+        .add_track {
             height: 35px;
             width: fit-content;
             background-color: $backgroundColor;
             box-shadow: $light-shadow, $dark-shadow;
             border: solid 2px $primaryColor;
-            border-radius: 5px 40px 40px 5px ;
-            padding: 0 15px;
-            margin-top: 8vh;
+            border-radius: 40px 5px 5px 40px;
+            padding: 0 15px 0 10px;
+            margin-top: 5vh;
             display: flex;
             align-items: center;
+            align-self: flex-end;
+
+            &:hover {
+                cursor: pointer;
+                transition-duration: $short-transition;
+
+                svg {
+                    transform: scale(1.08);
+                    transition-duration: $short-transition;
+                }
+            }
+
+            &:active {
+                svg {
+                    transform: scale(1);
+                    transition-duration: $short-transition;
+                }
+            }
 
             svg {
                 width: 20px;
@@ -122,10 +157,134 @@ body {
             }
 
             p {
-                margin: 0 0 0 15px;
+                margin: 0 0 0 10px;
                 color: $primaryColor;
                 font-size: 16px;
                 font-weight: 500;
+            }
+        }
+
+        .tracks_container {
+            margin-top: 30px;
+            width: 100%;
+
+            .line {
+                width: 100%;
+                height: 3px;
+                border-radius: 1.5px;
+                background-color: $secondaryColor;
+                z-index: 3;
+                box-shadow: $line-shadow;
+            }
+
+            .track_infos {
+                display: flex;
+                padding: 0 15px 0 10px;
+
+                .time, .title, .owner {
+                    margin: 0;
+                }
+
+                .time {
+                    min-width: 40px;
+                    width: 4vw;
+                }
+
+                .title {
+                    min-width: 150px;
+                    width: 15vw;
+                }
+
+                .owner {
+                    min-width: 150px;
+                }
+
+                .play {
+                    width: 25px;
+                    margin-right: 15px;
+                }
+            }
+
+            .infos {
+                color: $primaryColor;
+                opacity: 60%;
+                align-items: flex-end;
+                padding-bottom: 10px;
+            }
+
+            .tracks {
+                justify-content: space-between;
+                align-items: center;
+                height: 42px;
+                transition-duration: $short-transition;
+
+                .time_title_owner {
+                    display: flex;
+                    align-items: center;
+
+                    .play {
+                        height: 25px;
+                        opacity: 0;
+                        fill: $secondaryColor;
+                        box-shadow: $dark-shadow, $light-shadow;
+                        border-radius: 50%;
+                        transition-duration: $short-transition;
+
+                        &:hover {
+                            transform: scale(1.08);
+                            fill: $primaryColor;
+                            cursor: pointer;
+                            transition-duration: $short-transition;
+                        }
+
+                        &:active {
+                            transform: scale(1);
+                        }
+                    }
+                }
+
+                &:hover {
+
+                    .time_title_owner {
+
+                        .play {
+                            opacity: 100;
+                            transition-duration: $long-transition;
+                        }
+                    }
+
+                    .dots {
+                        opacity: 100;
+                        transition-duration: $short-transition;
+                    }
+                }
+
+                .dots {
+                    width: 31px;
+                    height: 7px;
+                    opacity: 0;
+
+                    circle {
+                        fill: $secondaryColor;
+                        transition-duration: $short-transition;
+                        box-shadow: $light-shadow, $dark-shadow;
+                    }
+
+                    &:hover {
+                        cursor: pointer;
+                        transform: scale(1.08);
+                        transition-duration: $short-transition;
+
+                        circle {
+                            transition-duration: $short-transition;
+                            fill: $primaryColor;
+                        }
+                    }
+
+                    &:active {
+                        transform: scale(1);
+                    }
+                }
             }
         }
     }
