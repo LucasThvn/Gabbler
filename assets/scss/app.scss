@@ -6,7 +6,7 @@ body {
     display: grid;
     grid-template-columns: 25vw 50vw 25vw;
     grid-template-rows: 85px calc(100vh - 235px) 150px;
-    grid-template-areas: "header header header" "files music ." "files . .";
+    grid-template-areas: "header header header" "files music ." "files player .";
     color: $secondaryColor;
     font-family: 'Lato', sans-serif;
 
@@ -63,18 +63,27 @@ body {
         grid-area: files;
         margin-top: 10vh;
 
-        .ideas {
+        .idea_container {
             height: 30px;
+            width: fit-content;
             padding: 4px 15px 0 10px;
             margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            font-size: 18px;
-            font-weight: bolder;
-            color: $primaryColor;
             box-shadow: $light-shadow, $dark-shadow;
-            width: fit-content;
             border-radius: 0 40px 40px 0;
+
+            a {
+                text-decoration: none;
+            }
+
+            .idea {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                font-size: 18px;
+                font-weight: bolder;
+                color: $primaryColor;
+            }
 
             &:hover {
                 cursor: pointer;
@@ -96,10 +105,12 @@ body {
                 padding: 0 0 4px 5px;
             }
 
+            border: solid 2px $backgroundColor;
+
         }
 
         .active {
-            border: solid 2px $primaryColor;
+            border-color: $primaryColor;
             border-left-color: $backgroundColor;
         }
     }
@@ -117,7 +128,7 @@ body {
         }
 
         .add_track {
-            height: 35px;
+            height: 30px;
             width: fit-content;
             background-color: $backgroundColor;
             box-shadow: $light-shadow, $dark-shadow;
@@ -128,6 +139,7 @@ body {
             display: flex;
             align-items: center;
             align-self: flex-end;
+            text-decoration: none;
 
             &:hover {
                 cursor: pointer;
@@ -199,7 +211,7 @@ body {
                     min-width: 150px;
                 }
 
-                .play {
+                .play_song, .pause_song {
                     width: 25px;
                     margin-right: 15px;
                 }
@@ -222,47 +234,84 @@ body {
                     display: flex;
                     align-items: center;
 
-                    .play {
+                    .play_song, .pause_song {
                         height: 25px;
-                        opacity: 0;
-                        fill: $secondaryColor;
-                        box-shadow: $dark-shadow, $light-shadow;
+                        width: 25px;
+                        background-color: $backgroundColor;
+                        border: none;
                         border-radius: 50%;
-                        transition-duration: $short-transition;
+                        padding: 0;
 
-                        &:hover {
-                            transform: scale(1.08);
-                            fill: $primaryColor;
-                            cursor: pointer;
+                        .played {
+                            height: 25px;
+                            opacity: 50%;
+                            border-radius: 50%;
+                            fill: $secondaryColor;
+                            box-shadow: $dark-shadow, $light-shadow;
                             transition-duration: $short-transition;
+
+                            &:hover {
+                                transform: scale(1.08);
+                                opacity: 100%;
+                                fill: $primaryColor;
+                                cursor: pointer;
+                                transition-duration: $short-transition;
+                            }
+
+                            &:active {
+                                transform: scale(1);
+                            }
                         }
 
-                        &:active {
-                            transform: scale(1);
+                        .paused{
+                            fill: $secondaryColor;
+                            border-radius: 50%;
+                            box-shadow: $dark-shadow, $light-shadow;
+                            transition-duration: $short-transition;
+
+                            &:hover {
+                                transform: scale(1.08);
+                                cursor: pointer;
+                                fill: $primaryColor;
+                                transition-duration: $short-transition;
+                            }
+
+                            &:active {
+                                transform: scale(1);
+                            }
                         }
                     }
-                }
 
-                &:hover {
+                    .play_song {
+                        .played {
+                            display: block;
+                        }
 
-                    .time_title_owner {
-
-                        .play {
-                            opacity: 100;
-                            transition-duration: $long-transition;
+                        .paused {
+                            display: none;
                         }
                     }
 
-                    .dots {
-                        opacity: 100;
-                        transition-duration: $short-transition;
+                    .pause_song {
+                        .played {
+                            display: none;
+                        }
+
+                        .paused {
+                            display: block;
+                        }
+                    }
+
+                    .song {
+                        .played {
+                            opacity:100%;
+                        }
                     }
                 }
 
                 .dots {
                     width: 31px;
                     height: 7px;
-                    opacity: 0;
 
                     circle {
                         fill: $secondaryColor;
@@ -284,6 +333,110 @@ body {
                     &:active {
                         transform: scale(1);
                     }
+                }
+            }
+        }
+    }
+
+    .audio-player {
+        grid-area: player;
+        display: flex;
+        align-items: center;
+
+        button.play, button.pause {
+            display: flex;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border: 0;
+            background-color: $primaryColor;
+            color: white;
+            font-size: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            margin: auto;
+            box-shadow: $line-shadow;
+
+            &:active {
+                transform: scale(0.96);
+            }
+        }
+
+        .play_icon {
+            margin-left: 4px;
+        }
+
+        button.play {
+            .play_icon {
+                display: block;
+            }
+
+            .pause_icon {
+                display: none;
+            }
+        }
+
+        button.pause {
+            .play_icon {
+                display: none;
+            }
+
+            .pause_icon {
+                display: block;
+            }
+        }
+
+        .bar_container {
+            margin-left:20px;
+            width: 85%;
+        }
+
+        .time {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+
+            .current_time, .duration {
+                color: $primaryColor;
+                font-size: 0.9em;
+                font-weight: lighter;
+            }
+        }
+
+        .seek-bar {
+            width: 95%;
+            height: 7px;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            border-radius: 100000px;
+            cursor: pointer;
+            box-shadow: $line-shadow;
+            margin: 0 auto 25px auto ;
+
+            .fill {
+                height: 7px;
+                background-color: $primaryColor;
+                border-radius: 4px;
+            }
+
+            .handle {
+                width: 7px;
+                height: 7px;
+                background-color: $primaryColor;
+                border-radius: 50%;
+                margin-left: -5px;
+                transform: scale(2);
+                transition: all 0.1s;
+
+                &:hover {
+                    background-color: lighten($primaryColor, 10%);
+                    transform: scale(2.4);
+                }
+
+                &:active {
+                    transform: scale(2);
                 }
             }
         }

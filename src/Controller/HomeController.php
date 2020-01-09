@@ -12,6 +12,8 @@ class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
+     * @param FolderRepository $folderRepository
+     * @return Response
      */
     public function index(FolderRepository $folderRepository) :Response
     {
@@ -22,9 +24,11 @@ class HomeController extends AbstractController
 
     /**
      * @param $id
+     * @param FolderRepository $folderRepository
+     * @return Response
      * @route("/{id}", name="open")
      */
-    public function open ($id, FolderRepository $folderRepository, TrackRepository $trackRepository)
+    public function open ($id, FolderRepository $folderRepository)
     {
         $folder = $folderRepository->find($id);
         $tracks = $folder->getTracks();

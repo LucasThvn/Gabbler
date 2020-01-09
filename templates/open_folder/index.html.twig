@@ -1,6 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-{% include 'home/files.html.twig' %}
+{% include 'open_folder/files.html.twig' %}
 {% include 'open_folder/music.html.twig' %}
+{% include 'open_folder/player.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('player') }}
 {% endblock %}
