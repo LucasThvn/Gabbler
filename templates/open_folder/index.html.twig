@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% include 'open_folder/files.html.twig' %}
+    {% include 'open_folder/music.html.twig' %}
+    {% include 'open_folder/player.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+    let songs = [];
+    {% for track in tracks %}
+    songs.push("{{ track.audioName }}");
+    {% endfor %}
+    </script>
+    {{ encore_entry_script_tags('player') }}
+{% endblock %}
