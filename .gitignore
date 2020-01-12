@@ -24,5 +24,3 @@ npm-debug.log
 yarn-error.log
 /public/uploads/
 ###< symfony/webpack-encore-bundle ###
-
-composer.json
