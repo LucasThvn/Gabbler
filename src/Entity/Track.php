@@ -40,7 +40,7 @@ class Track
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
      * @Assert\File(
-     *     maxSize="1024M",
+     *     maxSize="8M",
      *     mimeTypes={ "audio/mpeg", "audio/mp3"}
      * )
      *

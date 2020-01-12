@@ -1,10 +1,5 @@
 let audio = new Audio();
-
-
 let currentSong = 1;
-
-console.log(songs);
-
 let seekBar = document.querySelector('.seek-bar');
 let playButton = document.querySelector('button.play');
 let fillBar = seekBar.querySelector('.fill');
@@ -14,7 +9,6 @@ let currentPlaySong = document.getElementById(currentSong.toString());
 let mouseDown = false;
 
 audio.src = "../uploads/songs/" + songs[currentSong - 1];
-
 
 window.changeCurrentSong =  function changeCurrentSong (number) {
     if (audio.paused && number !== currentSong) {
@@ -134,6 +128,3 @@ window.addEventListener('mouseup', function (e) {
 
     audio.currentTime = p * audio.duration;
 });
-
-
-
