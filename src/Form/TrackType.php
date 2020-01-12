@@ -6,6 +6,8 @@ use App\Entity\Track;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class TrackType extends AbstractType
 {
@@ -13,7 +15,9 @@ class TrackType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('audio')
+            ->add('audioFile', VichImageType::class, [
+                'download_label' => 'download_file',
+            ])
             ->add('owner')
         ;
     }

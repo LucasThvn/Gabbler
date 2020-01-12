@@ -1,16 +1,5 @@
-const songs = ['if_i_go.mp3',
-                'little_lion_man.mp3',
-                'jaguar.mp3',
-];
-
-
-
 let audio = new Audio();
-
-
 let currentSong = 1;
-
-
 let seekBar = document.querySelector('.seek-bar');
 let playButton = document.querySelector('button.play');
 let fillBar = seekBar.querySelector('.fill');
@@ -19,21 +8,20 @@ let currentTimeSong = document.querySelector('.current_time');
 let currentPlaySong = document.getElementById(currentSong.toString());
 let mouseDown = false;
 
-audio.src = "../build/audio/" + songs[currentSong - 1];
-
+audio.src = "../uploads/songs/" + songs[currentSong - 1];
 
 window.changeCurrentSong =  function changeCurrentSong (number) {
     if (audio.paused && number !== currentSong) {
         currentPlaySong = document.getElementById(currentSong.toString());
         currentPlaySong.className = "play_song";
         currentSong = number;
-        audio.src = "../build/audio/" + songs[currentSong - 1];
+        audio.src = "../uploads/songs/" + songs[currentSong - 1];
         audio.play();
     } else if (audio.played && number !== currentSong){
         currentPlaySong = document.getElementById(currentSong.toString());
         currentPlaySong.className = "play_song";
         currentSong = number;
-        audio.src = "../build/audio/" + songs[currentSong - 1];
+        audio.src = "../uploads/songs/" + songs[currentSong - 1];
         audio.play();
     }else if (audio.paused && number === currentSong){
         audio.play();
@@ -140,6 +128,3 @@ window.addEventListener('mouseup', function (e) {
 
     audio.currentTime = p * audio.duration;
 });
-
-
-
