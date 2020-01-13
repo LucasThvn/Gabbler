@@ -13,11 +13,10 @@ class OpenFolderController extends AbstractController
     /**
      * @param $id
      * @param FolderRepository $folderRepository
-     * @param TrackRepository $trackRepository
      * @return Response
      * @route("open/{id}", name="open")
      */
-    public function open ($id, FolderRepository $folderRepository, TrackRepository $trackRepository)
+    public function open ($id, FolderRepository $folderRepository)
     {
         $folder = $folderRepository->find($id);
         $tracks = $folder->getTracks();
