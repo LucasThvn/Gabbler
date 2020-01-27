@@ -3,9 +3,11 @@
 {% block title %}New Folder{% endblock %}
 
 {% block body %}
-    <h1>Create new Folder</h1>
+<section class="music">
+    <h2 class="new_track_title">Add a new Folder</h2>
 
     {{ include('folder/_form.html.twig') }}
 
-    <a href="{{ path('folder_index') }}">back to list</a>
+    <a href="{{ path('home') }}">back to list</a>
+</section>
 {% endblock %}

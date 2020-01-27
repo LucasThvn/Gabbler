@@ -33,6 +33,12 @@ class Folder
      */
     private $tracks;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Musician", inversedBy="folders")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $musician;
+
     public function __construct()
     {
         $this->tracks = new ArrayCollection();
@@ -100,5 +106,17 @@ class Folder
 
     public function __toString(){
         return $this->name;
+    }
+
+    public function getMusician(): ?Musician
+    {
+        return $this->musician;
+    }
+
+    public function setMusician(?Musician $musician): self
+    {
+        $this->musician = $musician;
+
+        return $this;
     }
 }
