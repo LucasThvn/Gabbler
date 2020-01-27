@@ -1,11 +1,8 @@
 .audio-player {
     grid-area: player;
-    display: flex;
-    align-items: flex-end;
-    margin-bottom: 5vh;
-    justify-content: space-between;
 
     button.play, button.pause {
+        outline:none;
         display: flex;
         justify-content: center;
         width: 60px;
@@ -21,10 +18,6 @@
         &:active {
             transform: scale(0.96);
         }
-    }
-
-    .play_icon {
-        margin-left: 4px;
     }
 
     button.play {

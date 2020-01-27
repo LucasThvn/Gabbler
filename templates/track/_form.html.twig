@@ -1,4 +1,22 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<div class="name-form">
+    {{ form_errors(form.name) }}
+    {{ form_widget(form.name) }}
+    <label for="{{ form.name.vars.id }}"
+           class="{{ form.name.vars.required ? 'required' }} label-name">
+        <span class="content-name">File name</span>
+    </label>
+</div>
+
+
+<div class="form_file">
+    <div class="cache_misère">
+        <div id="cache_button" class="cache_button" onclick="fileUpload()">Choisir un fichier</div>
+        <div id="cache_text" class="cache_text">Pas de fichier selectioné</div>
+    </div>
+    <label for="{{ form.audioFile.vars.id }} class="{{ form.audioFile.vars.required ? 'required' }}"></label>
+    {{ form_widget(form.audioFile) }}
+</div>
+
+<button class="submit-button">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

@@ -3,22 +3,15 @@
 {% block title %}New Track{% endblock %}
 
 {% block body %}
-{% include 'home/files.html.twig' %}
 <section class="music">
-    <h2>Add a new Track in {{ currentFolder }}</h2>
-
-    <div class="tracks_container">
-        <div class="infos track_infos">
-            <div class="play"></div>
-            <p class="time">Time</p>
-            <p class="title">Title</p>
-            <p class="owner">Owner</p>
-        </div>
-        <div class="line"></div>
-    </div>
+    <h2 class="new_track_title">Add a new Track in {{ currentFolder }}</h2>
 
     {{ include('track/_form.html.twig') }}
 
     <a href="{{ path('open', {'id' : id}) }}">back to list</a>
 </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('tracks') }}
 {% endblock %}

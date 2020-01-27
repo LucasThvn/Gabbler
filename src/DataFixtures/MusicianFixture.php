@@ -24,7 +24,7 @@ class MusicianFixture extends Fixture
             $musician,
             'lucas'
         ));
-        $musician->setRoles(['ROLE_MUSICIAN']);
+        $musician->setRoles(['ROLE_BAND']);
 
         $manager->persist($musician);
 

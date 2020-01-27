@@ -12,9 +12,11 @@ class FolderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('date_created')
-        ;
+            ->add('name', null, [
+                'attr' => array(
+                    'placeholder' => ' ',
+                ),
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -1,8 +1,24 @@
 $primaryColor:#E0A526;
 $secondaryColor:#EDE6DE;
-$backgroundColor:#1D252D;
+$dark-color: #090f16;
+$backgroundColor: #141c24;
 $light-shadow: -5px -5px 6px 0px #5D5D5D50;
-$dark-shadow: 6px 6px 6px 0px #161C22;
+$dark-shadow: 6px 6px 6px 0px #091218;
 $line-shadow:3px 3px 5px 0 #0e1318, -3px -3px 5px 0 rgba(249, 249, 249, 0.45);
 $short-transition:0.13s;
 $long-transition:0.25s;
+
+/* Vive le JS !! */
+@mixin button {
+    background-color: $backgroundColor;
+    border:solid 2px $primaryColor;
+    border-radius: 20px;
+    box-shadow: $light-shadow, $dark-shadow;
+    color: $primaryColor;
+    padding: 7px 20px;
+    font-size: 0.8rem;
+    width: fit-content;
+    width: -moz-fit-content;
+    transition-duration: $short-transition;
+    outline: none;
+}

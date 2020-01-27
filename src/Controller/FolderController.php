@@ -3,12 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Folder;
+use App\Entity\Musician;
 use App\Form\FolderType;
 use App\Repository\FolderRepository;
+use App\Repository\MusicianRepository;
+use Cassandra\Time;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @Route("/folder")
@@ -16,53 +21,34 @@ use Symfony\Component\Routing\Annotation\Route;
 class FolderController extends AbstractController
 {
     /**
-     * @Route("/", name="folder_index", methods={"GET"})
-     * @param FolderRepository $folderRepository
-     * @return Response
-     */
-    public function index(FolderRepository $folderRepository): Response
-    {
-        return $this->render('folder/index.html.twig', [
-            'folders' => $folderRepository->findAll(),
-        ]);
-    }
-
-
-
-    /**
      * @Route("/new", name="folder_new", methods={"GET","POST"})
      * @param Request $request
+     * @param UserInterface|null $user
+     * @param MusicianRepository $musicianRepository
      * @return Response
+     * @throws \Exception
      */
-    public function new(Request $request): Response
+    public function new(Request $request, ?UserInterface $user, MusicianRepository $musicianRepository): Response
     {
         $folder = new Folder();
+        $dateTime = new DateTime();
         $form = $this->createForm(FolderType::class, $folder);
         $form->handleRequest($request);
+        $musician = $musicianRepository->find($user->getId());
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $folder->setDateCreated($dateTime);
+            $folder->setMusician($musician);
             $entityManager->persist($folder);
             $entityManager->flush();
 
-            return $this->redirectToRoute('folder_index');
+            return $this->redirectToRoute('open', ['id' => $folder->getId()]);
         }
 
         return $this->render('folder/new.html.twig', [
             'folder' => $folder,
             'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="folder_show", methods={"GET"})
-     * @param Folder $folder
-     * @return Response
-     */
-    public function show(Folder $folder): Response
-    {
-        return $this->render('folder/show.html.twig', [
-            'folder' => $folder,
         ]);
     }
 

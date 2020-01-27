@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @Route("/track")
@@ -35,7 +36,7 @@ class TrackController extends AbstractController
      * @param FolderRepository $folderRepository
      * @return Response
      */
-    public function new($id, Request $request, FolderRepository $folderRepository): Response
+    public function new($id, Request $request, FolderRepository $folderRepository, ?UserInterface $user): Response
     {
         $folder = $folderRepository->find($id);
         $track = new Track();
@@ -45,16 +46,16 @@ class TrackController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $track->setFolder($folder);
+            $track->setOwner($user->getUsername());
             $entityManager->persist($track);
             $entityManager->flush();
-
             return $this->redirectToRoute('open', ['id' => $id]);
         }
 
         return $this->render('track/new.html.twig', [
             'track' => $track,
             'form' => $form->createView(),
-            'folders' => $folderRepository->findAll(),
+            'folders' => $folderRepository->findByMusician($user->getId()),
             'currentFolder' => $folder,
             'id' => $id,
         ]);

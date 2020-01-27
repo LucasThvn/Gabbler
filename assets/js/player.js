@@ -45,12 +45,12 @@ window.changeCurrentSong =  function changeCurrentSong (number) {
 
 playButton.addEventListener('click', function () {
     if (audio.paused) {
-        if (currentSong == 1) {
+        if (currentSong === 1) {
             currentPlaySong.className = 'song pause_song';
         }
         audio.play();
     } else {
-        if (currentSong == 1) {
+        if (currentSong === 1) {
             currentPlaySong.className = 'song play_song'
         }
         audio.pause();
@@ -128,3 +128,14 @@ window.addEventListener('mouseup', function (e) {
 
     audio.currentTime = p * audio.duration;
 });
+
+
+window.onload = function () {
+    let i = 1;
+    for (let song of songs) {
+        let audioFile = document.getElementById('audioTrack' + i);
+        let audioTime = document.getElementById('audioTime' + i);
+        audioTime.textContent = convertToTime(Math.round(audioFile.duration));
+        i++;
+    }
+};

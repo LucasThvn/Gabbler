@@ -14,11 +14,14 @@ class TrackType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('audioFile', VichImageType::class, [
-                'download_label' => 'download_file',
+            ->add('name', null, [
+                'attr' => array(
+                    'placeholder' => ' ',
+                ),
             ])
-            ->add('owner')
+            ->add('audioFile', VichFileType::class, [
+                'download_label' => 'download_file'
+            ])
         ;
     }
 

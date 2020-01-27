@@ -1,5 +1,7 @@
 @import "vars";
 
+@import "~bootstrap/scss/bootstrap";
+
 body {
     margin: 0;
     background-color: $backgroundColor;
@@ -21,4 +23,6 @@ body {
     @import "tracks";
 
     @import "player";
+
+    @import "forms";
 }
