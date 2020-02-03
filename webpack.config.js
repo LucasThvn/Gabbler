@@ -42,7 +42,6 @@ Encore
     .addEntry('player', './assets/js/player.js')
     .addEntry('profile', './assets/js/profile.js')
     .addEntry('tracks', './assets/js/tracks.js')
-    .addEntry('popover', './assets/js/popover.js')
     //.addEntry('page2', './assets/js/page2.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.

@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
+use App\Repository\BandRepository;
 use App\Repository\FolderRepository;
-use App\Repository\TrackRepository;
+use App\Repository\MusicianRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,20 +19,18 @@ class OpenFolderController extends AbstractController
      * @return Response
      * @route("open/{id}", name="open")
      */
-    public function open ($id, FolderRepository $folderRepository, ?UserInterface $user)
+    public function open ($id, FolderRepository $folderRepository, ?UserInterface $user, MusicianRepository $musicianRepository)
     {
-        $folders = $folderRepository->findById($id, $user->getId());
-        foreach ($folders as $folder) {
-            $tracks = $folder->getTracks();
-        }
-
-        $active = '';
+        $musician = $musicianRepository->find($user->getId());
+        $folder = $folderRepository->findById($id, $musician->getActiveBand());
 
         return $this->render('open_folder/index.html.twig', [
-            'folders' => $folderRepository->findByMusician($user->getId()),
-            'tracks' => $tracks,
+            'tracks' => $folder->getTracks(),
             'currentFolder' => $folder,
-            'active' => $active,
+            'currentId' => $id,
+            'folders' => $folderRepository->findByBand($musician->getActiveBand()),
+            'bands' => $musician->getBands(),
+            'currentBand' => $musician->getActiveBand(),
         ]);
     }
 }

@@ -3,7 +3,8 @@
     <div class="folders_container d-flex justify-content-between flex-column">
         <div>
             {% for folder in folders %}
-                <div class="idea_container {% if currentFolder.id is defined and currentFolder.id == folder.id %}active{% endif %}">
+
+                <div class="idea_container {% if currentId == folder.id %}active{% endif %}">
                     <a href="{{ path('open', {'id' : folder.id}) }}">
                         <div class="idea">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"

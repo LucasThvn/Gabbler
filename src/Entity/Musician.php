@@ -41,13 +41,23 @@ class Musician implements UserInterface
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Folder", mappedBy="musician")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Band", inversedBy="musicians")
      */
-    private $folders;
+    private $bands;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $defaultBand;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $activeBand;
 
     public function __construct()
     {
-        $this->folders = new ArrayCollection();
+        $this->bands = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -137,32 +147,51 @@ class Musician implements UserInterface
     }
 
     /**
-     * @return Collection|Folder[]
+     * @return Collection|Band[]
      */
-    public function getFolders(): Collection
+    public function getBands(): Collection
     {
-        return $this->folders;
+        return $this->bands;
     }
 
-    public function addFolder(Folder $folder): self
+    public function addBand(Band $band): self
     {
-        if (!$this->folders->contains($folder)) {
-            $this->folders[] = $folder;
-            $folder->setMusician($this);
+        if (!$this->bands->contains($band)) {
+            $this->bands[] = $band;
         }
 
         return $this;
     }
 
-    public function removeFolder(Folder $folder): self
+    public function removeBand(Band $band): self
     {
-        if ($this->folders->contains($folder)) {
-            $this->folders->removeElement($folder);
-            // set the owning side to null (unless already changed)
-            if ($folder->getMusician() === $this) {
-                $folder->setMusician(null);
-            }
+        if ($this->bands->contains($band)) {
+            $this->bands->removeElement($band);
         }
+
+        return $this;
+    }
+
+    public function getDefaultBand(): ?int
+    {
+        return $this->defaultBand;
+    }
+
+    public function setDefaultBand(int $defaultBand): self
+    {
+        $this->defaultBand = $defaultBand;
+
+        return $this;
+    }
+
+    public function getActiveBand(): ?int
+    {
+        return $this->activeBand;
+    }
+
+    public function setActiveBand(?int $activeBand): self
+    {
+        $this->activeBand = $activeBand;
 
         return $this;
     }

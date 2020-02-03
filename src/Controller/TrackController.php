@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Track;
 use App\Form\TrackType;
 use App\Repository\FolderRepository;
+use App\Repository\MusicianRepository;
 use App\Repository\TrackRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,27 +19,17 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class TrackController extends AbstractController
 {
     /**
-     * @Route("/", name="track_index", methods={"GET"})
-     * @param TrackRepository $trackRepository
-     * @return Response
-     */
-    public function index(TrackRepository $trackRepository): Response
-    {
-        return $this->render('track/index.html.twig', [
-            'tracks' => $trackRepository->findAll(),
-        ]);
-    }
-
-    /**
      * @Route("/new/{id}", name="track_new", methods={"GET","POST"})
      * @param $id
      * @param Request $request
      * @param FolderRepository $folderRepository
      * @return Response
      */
-    public function new($id, Request $request, FolderRepository $folderRepository, ?UserInterface $user): Response
+    public function new($id, Request $request, FolderRepository $folderRepository, ?UserInterface $user, MusicianRepository $musicianRepository): Response
     {
-        $folder = $folderRepository->find($id);
+        $musician = $musicianRepository->find($user->getId());
+        $bands = $musician->getBands();
+        $folder = $folderRepository->findById($id, $musician->getActiveBand());
         $track = new Track();
         $form = $this->createForm(TrackType::class, $track);
         $form->handleRequest($request);
@@ -55,9 +46,10 @@ class TrackController extends AbstractController
         return $this->render('track/new.html.twig', [
             'track' => $track,
             'form' => $form->createView(),
-            'folders' => $folderRepository->findByMusician($user->getId()),
             'currentFolder' => $folder,
             'id' => $id,
+            'bands' => $bands,
+            'currentBand' => $musician->getActiveBand(),
         ]);
     }
 
@@ -85,12 +77,12 @@ class TrackController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="track_delete", methods={"DELETE"})
+     * @Route("/{id}/{folderId}", name="track_delete", methods={"DELETE"})
      * @param Request $request
      * @param Track $track
      * @return Response
      */
-    public function delete(Request $request, Track $track): Response
+    public function delete(Request $request, Track $track, $folderId): Response
     {
         if ($this->isCsrfTokenValid('delete'.$track->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -98,6 +90,6 @@ class TrackController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('track_index');
+        return $this->redirectToRoute('open', ['id' => $folderId]);
     }
 }

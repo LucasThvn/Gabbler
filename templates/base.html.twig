@@ -11,10 +11,11 @@
     </head>
     <body>
         {% block header%}{% include "header.html.twig" %}{% endblock %}
-        {% block body %}{% endblock %}
+        {% block body %}
+
+        {% endblock %}
         {% block javascripts %}{% endblock %}
         {{ encore_entry_script_tags('app') }}
         {{ encore_entry_script_tags('profile') }}
-        {{ encore_entry_script_tags('popover') }}
     </body>
 </html>
