@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Folder;
 use App\Entity\Musician;
 use App\Form\FolderType;
+use App\Repository\BandRepository;
 use App\Repository\FolderRepository;
 use App\Repository\MusicianRepository;
 use Cassandra\Time;
@@ -28,7 +29,7 @@ class FolderController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function new(Request $request, ?UserInterface $user, MusicianRepository $musicianRepository): Response
+    public function new(Request $request, ?UserInterface $user, MusicianRepository $musicianRepository, BandRepository $bandRepository): Response
     {
         $folder = new Folder();
         $dateTime = new DateTime();
@@ -39,7 +40,7 @@ class FolderController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $folder->setDateCreated($dateTime);
-            $folder->setMusician($musician);
+            $folder->setBand($bandRepository->findOneBy(['id' => $musician->getActiveBand()]));
             $entityManager->persist($folder);
             $entityManager->flush();
 

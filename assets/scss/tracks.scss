@@ -141,6 +141,13 @@
                 margin-right: 15px;
             }
 
+            &:hover {
+                transition-duration: $long-transition;
+                form {
+                    visibility: visible;
+                }
+            }
+
         }
 
         .infos {
@@ -237,34 +244,38 @@
                 }
             }
 
-            .dots {
-                width: 25px;
-                height: 7px;
-                position: relative;
 
-                circle {
-                    fill: $secondaryColor;
-                    transition-duration: $short-transition;
-                    box-shadow: $light-shadow, $dark-shadow;
-                }
+            form {
+                width: fit-content;
+                width: -moz-fit-content;
+                visibility: hidden;
 
-                &:hover {
-                    cursor: pointer;
-                    transform: scale(1.08);
-                    transition-duration: $short-transition;
+                .delete {
+                    background-color: $backgroundColor;
+                    border: none;
+                    outline: none;
 
-                    circle {
+                    svg {
+                        width: 15px;
+                        fill: $secondaryColor;
                         transition-duration: $short-transition;
-                        fill: $primaryColor;
+                        box-shadow: $light-shadow, $dark-shadow;
+                    }
+
+                    &:hover {
+                        svg {
+                            cursor: pointer;
+                            transform: scale(1.08);
+                            transition-duration: $short-transition;
+                            fill: $primaryColor;
+                        }
+                    }
+
+                    &:active {
+                        transform: scale(1);
                     }
                 }
-
-                &:active {
-                    transform: scale(1);
-                }
             }
-
-            @import "options_popup";
         }
     }
 

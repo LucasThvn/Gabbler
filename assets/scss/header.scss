@@ -13,6 +13,10 @@ header {
         box-shadow: $light-shadow, $dark-shadow;
     }
 
+    .band-name {
+        color: $primaryColor;
+    }
+
     .login_home {
         @include button;
         text-decoration: none;
@@ -108,6 +112,11 @@ header {
                     background-color: $primaryColor;
                     color: $backgroundColor;
                 }
+            }
+
+            .inactive {
+                background-color: $primaryColor;
+                color: $backgroundColor;
             }
         }
     }

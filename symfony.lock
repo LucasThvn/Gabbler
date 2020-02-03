@@ -1,7 +1,4 @@
 {
-    "behat/transliterator": {
-        "version": "v1.2.0"
-    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -453,9 +450,6 @@
         "version": "v5.0.2"
     },
     "symfony/string": {
-        "version": "v5.0.2"
-    },
-    "symfony/templating": {
         "version": "v5.0.2"
     },
     "symfony/test-pack": {

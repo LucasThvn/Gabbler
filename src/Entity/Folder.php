@@ -34,10 +34,10 @@ class Folder
     private $tracks;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Musician", inversedBy="folders")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Band", inversedBy="folders")
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $musician;
+    private $band;
 
     public function __construct()
     {
@@ -108,14 +108,14 @@ class Folder
         return $this->name;
     }
 
-    public function getMusician(): ?Musician
+    public function getBand(): ?Band
     {
-        return $this->musician;
+        return $this->band;
     }
 
-    public function setMusician(?Musician $musician): self
+    public function setBand(?Band $band): self
     {
-        $this->musician = $musician;
+        $this->band = $band;
 
         return $this;
     }

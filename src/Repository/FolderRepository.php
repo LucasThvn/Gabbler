@@ -20,35 +20,22 @@ class FolderRepository extends ServiceEntityRepository
         parent::__construct($registry, Folder::class);
     }
 
-    public function findByMusician($id)
+    public function findByBand($id)
     {
         return $this->createQueryBuilder('f')
-            ->andWhere('f.musician =' . $id)
+            ->andWhere('f.band =' . $id)
             ->getQuery()
             ->getResult()
         ;
     }
 
-
-    public function findById($id, $musicianId)
+    public function findById($id, $bandId): ?Folder
     {
         return $this->createQueryBuilder('f')
-            ->andWhere('f.musician =' . $musicianId)
+            ->andWhere('f.band =' . $bandId)
             ->andWhere('f.id = ' . $id)
             ->getQuery()
-            ->getResult()
+            ->getOneOrNullResult()
             ;
     }
-
-    /*
-    public function findOneBySomeField($value): ?Folder
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

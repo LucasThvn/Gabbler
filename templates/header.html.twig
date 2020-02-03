@@ -1,5 +1,6 @@
 <header class="d-flex justify-content-between h-100 align-items-center">
-    <a class="text-decoration-none" href="{% if folders[0] is not defined %}{{ path('home') }}{% else %}{{ path('open', {'id' : folders[0].id}) }}{% endif %}">
+    <a class="text-decoration-none"
+       href="{% if folders[0] is not defined %}{{ path('home') }}{% else %}{{ path('open', {'id' : folders[0].id}) }}{% endif %}">
         <div class="gabbler d-flex align-items-center justify-content-center ml-3">GABBLER</div>
     </a>
 
@@ -7,8 +8,18 @@
     <a class="login_home mr-3" href="{{ (app.user == null) ? path('app_login') : path('profile') }}">login</a>
 
     {% else %}
-
-    <div class="profile d-flex justify-content-center align-items-center" id="profile" onclick="profile('profilePopUp')">
+    <div class="d-flex align-items-center">
+    <div class="mr-3">
+        {% for band in bands %}
+            {% if currentBand == band.id %}
+                <div class="band-name">
+                    {{ band.name | upper }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="profile d-flex justify-content-center align-items-center" id="profile"
+         onclick="profile('profilePopUp')">
         <button class="d-flex justify-content-center align-items-center"><img
                     src="https://cdn.pixabay.com/photo/2016/09/10/11/11/musician-1658887_1280.jpg"></button>
     </div>
@@ -24,10 +35,17 @@
             <div class="user_name">
                 {{ app.user.username }}
             </div>
-            <div class="user_email">
+            <div class="user_email mb-3">
                 {{ app.user.email }}
             </div>
-            <a class="options mt-3" href={{ path('profile') }}>
+            {% for band in bands %}
+                <a class="options {% if currentBand == band.id %}inactive{% endif %}"  href={{ path('change_band', {'id' : band.id}) }}>
+                    <div class="profile_infos">
+                        {{ band.name }}
+                    </div>
+                </a>
+            {% endfor %}
+            <a class="options" href={{ path('profile') }}>
                 <div class="profile_infos">
                     Your Profile
                 </div>
@@ -39,5 +57,6 @@
             </a>
         </div>
         {% endif %}
+    </div>
     </div>
 </header>
